@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Texas Workshop – Artisan Furniture & Design</title>
+    <meta name="description" content="Texas Workshop – handcrafted furniture, timeless elegance. Custom wardrobes, tables, chairs, and armoires." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        /* ── Reset & Base ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e1e1e;
+            background: #faf8f5;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        /* ── Typography ── */
+        h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
+        .section-tag {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #a67c52;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 600;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+        .section-desc {
+            font-size: 1.05rem;
+            color: #555;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* ── Container ── */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── Header / Nav ── */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.2rem 0;
+            transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+        }
+        header.scrolled {
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 0.8rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.06);
+        }
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2c2c2c;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: #a67c52; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #444;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: #a67c52;
+            transition: width 0.3s;
+        }
+        .nav-links a:hover { color: #a67c52; }
+        .nav-links a:hover::after { width: 100%; }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: #2c2c2c;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 8rem 0 4rem;
+            background: #1a1a1a;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
+            z-index: 1;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            max-width: 720px;
+        }
+        .hero-content .section-tag { color: #c9a87c; }
+        .hero-title {
+            font-size: clamp(2.6rem, 6vw, 4.8rem);
+            font-weight: 700;
+            line-height: 1.08;
+            margin-bottom: 1.5rem;
+        }
+        .hero-title em { font-style: italic; color: #c9a87c; }
+        .hero-desc {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 520px;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.6rem;
+            border: 2px solid #c9a87c;
+            background: transparent;
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.35s;
+            border-radius: 0;
+        }
+        .btn:hover {
+            background: #c9a87c;
+            color: #1a1a1a;
+        }
+        .btn--filled {
+            background: #c9a87c;
+            color: #1a1a1a;
+            border-color: #c9a87c;
+        }
+        .btn--filled:hover {
+            background: transparent;
+            color: #fff;
+        }
+
+        /* ── About ── */
+        .about {
+            padding: 7rem 0;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about-image {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            box-shadow: 20px 20px 0 rgba(166, 124, 82, 0.15);
+        }
+        .about-text .section-desc { margin-bottom: 1.5rem; }
+        .about-text .section-desc:last-of-type { margin-bottom: 2rem; }
+        .signature {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #a67c52;
+        }
+
+        /* ── Gallery / Collection ── */
+        .gallery {
+            padding: 7rem 0;
+            background: #fff;
+        }
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .gallery-header .section-desc { margin: 0 auto; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 4 / 3;
+            background: #eee;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.06); }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay h3 {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* ── Craftsmanship ── */
+        .craft {
+            padding: 7rem 0;
+            background: #f4f0ea;
+        }
+        .craft-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 3.5rem;
+        }
+        .craft-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: #fff;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .craft-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+        }
+        .craft-icon {
+            font-size: 2.4rem;
+            margin-bottom: 1.2rem;
+        }
+        .craft-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.6rem;
+            color: #2c2c2c;
+        }
+        .craft-card p {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* ── Contact ── */
+        .contact {
+            padding: 7rem 0;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        .contact-info .section-tag { color: #c9a87c; }
+        .contact-info .section-title { color: #fff; }
+        .contact-info .section-desc { color: rgba(255,255,255,0.7); }
+        .contact-details {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .contact-detail .icon {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #c9a87c;
+            flex-shrink: 0;
+        }
+        .contact-detail a {
+            color: rgba(255,255,255,0.85);
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+        .contact-detail a:hover { color: #c9a87c; }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem 1.2rem;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #c9a87c;
+        }
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255,255,255,0.35);
+        }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact-form .btn {
+            align-self: flex-start;
+        }
+
+        /* ── Footer ── */
+        footer {
+            padding: 2.5rem 0;
+            background: #111;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        footer span { color: #c9a87c; }
+
+        /* ── Lightbox ── */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            padding: 2rem;
+        }
+        .lightbox.open { opacity: 1; pointer-events: all; }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        .lightbox-close:hover { opacity: 1; }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .about-grid,
+            .contact-wrap {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .about-image { height: 320px; }
+            .craft-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            .nav-links {
+                position: fixed;
+                top: 0; right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(250,248,245,0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: right 0.4s ease;
+                box-shadow: -10px 0 40px rgba(0,0,0,0.06);
+            }
+            .nav-links.open { right: 0; }
+            .menu-toggle { display: flex; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .craft-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: clamp(2rem, 8vw, 2.8rem); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── Header ─── -->
+    <header id="header">
+        <div class="container nav-wrap">
+            <div class="logo">Texas<span>.</span>Workshop</div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Collection</a></li>
+                <li><a href="#craft">Craftsmanship</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- ─── Hero ─── -->
+    <section class="hero" id="home">
+        <img
+            class="hero-bg"
+            src="16 Modern Luxury Wardrobe Designs For Elegant Bedrooms.jpeg"
+            alt="Texas Workshop luxury furniture"
+            loading="eager"
+        />
+        <div class="container hero-content">
+            <p class="section-tag">Since 2018</p>
+            <h1 class="hero-title">Where <em>Craft</em><br />Meets Character</h1>
+            <p class="hero-desc">
+                Handcrafted furniture built from solid hardwoods and fine finishes.
+                Every piece tells a story of patience, skill, and an eye for timeless design.
+            </p>
+            <a href="#gallery" class="btn">Explore Collection</a>
+        </div>
+    </section>
+
+    <!-- ─── About ─── -->
+    <section class="about" id="about">
+        <div class="container about-grid">
+            <img
+                class="about-image"
+                src="Hidden Armoire Workspace Secrets.jpeg"
+                alt="Texas Workshop craftsmanship"
+                loading="lazy"
+            />
+            <div class="about-text">
+                <p class="section-tag">Our Story</p>
+                <h2 class="section-title">Built by Hand,<br />Built to Last</h2>
+                <p class="section-desc">
+                    At Texas Workshop, we believe furniture should outlive trends.
+                    Our master craftspeople have spent decades perfecting joinery,
+                    carving, and finishing techniques passed down through generations.
+                </p>
+                <p class="section-desc">
+                    Every piece – from a stately wardrobe to an intimate side table –
+                    begins as a sketch and ends as a heirloom. We source only
+                    sustainably harvested timber and finish each surface by hand
+                    to bring out the natural warmth of the wood.
+                </p>
+                <p class="signature">– The Texas Workshop Team</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Gallery / Collection ─── -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="gallery-header">
+                <p class="section-tag">Our Collection</p>
+                <h2 class="section-title">Featured Pieces</h2>
+                <p class="section-desc">
+                    Each creation reflects a dialogue between tradition and
+                    contemporary living – furniture with soul.
+                </p>
+            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    </section>
+
+    <!-- ─── Craftsmanship ─── -->
+    <section class="craft" id="craft">
+        <div class="container">
+            <div style="text-align:center;">
+                <p class="section-tag">Why Choose Us</p>
+                <h2 class="section-title">The Art of Making</h2>
+                <p class="section-desc" style="margin:0 auto;">
+                    Three pillars that guide everything we create.
+                </p>
+            </div>
+            <div class="craft-grid">
+                <div class="craft-card">
+                    <div class="craft-icon">🌲</div>
+                    <h3>Sustainable Materials</h3>
+                    <p>We hand-select every board from responsibly managed forests, ensuring beauty that doesn't cost the earth.</p>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon">🛠️</div>
+                    <h3>Traditional Joinery</h3>
+                    <p>Mortise and tenon, dovetail, and hand-cut joints – techniques that give our furniture strength for generations.</p>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon">✨</div>
+                    <h3>Hand-Finished</h3>
+                    <p>Each surface is sanded, oiled, and waxed by hand. No shortcuts, no mass production – just honest work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Contact ─── -->
+    <section class="contact" id="contact">
+        <div class="container contact-wrap">
+            <div class="contact-info">
+                <p class="section-tag">Get in Touch</p>
+                <h2 class="section-title">Let's Create<br />Something Together</h2>
+                <p class="section-desc">
+                    Whether you have a vision for a custom piece or simply want to
+                    discuss possibilities, we'd love to hear from you.
+                </p>
+                <div class="contact-details">
+                    <div class="contact-detail">
+                        <div class="icon">📞</div>
+                        <a href="tel:+25424223842">+254 242 238 42</a>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="icon">✉️</div>
+                        <a href="mailto:hello@texasworkshop.com">hello@texasworkshop.com</a>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="icon">📍</div>
+                        <span>Nairobi, Kenya</span>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Thank you! We will get back to you soon.');">
+                <input type="text" placeholder="Your Name" required />
+                <input type="email" placeholder="Email Address" required />
+                <textarea placeholder="Tell us about your project…" required></textarea>
+                <button type="submit" class="btn btn--filled">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Texas Workshop. Crafted with <span>♥</span> in Kenya.</p>
+        </div>
+    </footer>
+
+    <!-- ─── Lightbox ─── -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img id="lightboxImg" src="" alt="Gallery enlargement" />
+    </div>
+
+    <script>
+        // ── Navigation scroll effect ──
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ── Mobile menu ──
+        const toggle = document.getElementById('menuToggle');
+        const nav = document.getElementById('navLinks');
+        toggle.addEventListener('click', () => nav.classList.toggle('open'));
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => nav.classList.remove('open'));
+        });
+
+        // ── Gallery images ──
+        const imageFilenames = [
+            { file: '16 Modern Luxury Wardrobe Designs For Elegant Bedrooms.jpeg', label: 'Luxury Wardrobe' },
+            { file: '_ (1).jpeg', label: 'Elegant Sideboard' },
+            { file: '_ (2).jpeg', label: 'Carved Armoire' },
+            { file: '_ (3).jpeg', label: 'Classic Dresser' },
+            { file: '_ (4).jpeg', label: 'Rustic Cabinet' },
+            { file: '_ (5).jpeg', label: 'Modern Console' },
+            { file: 'Ensemble table ancienne Louis XIV avec chaises tapissées.jpeg', label: 'Louis XIV Dining Set' },
+            { file: 'Hidden Armoire Workspace Secrets.jpeg', label: 'Armoire Workstation' },
+            { file: '_.jpeg', label: 'Designer Piece' },
+            { file: 'wooden chair.jpeg', label: 'Handcrafted Chair' },
+        ];
+
+        const grid = document.getElementById('galleryGrid');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        imageFilenames.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.innerHTML = `
+                <img src="${item.file}" alt="${item.label}" loading="lazy" />
+                <div class="gallery-overlay"><h3>${item.label}</h3></div>
+            `;
+            div.addEventListener('click', () => {
+                lightbox.classList.add('open');
+                lightboxImg.src = item.file;
+                lightboxImg.alt = item.label;
+            });
+            grid.appendChild(div);
+        });
+
+        lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox) lightbox.classList.remove('open');
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') lightbox.classList.remove('open');
+        });
+    </script>
+</body>
+</html>
