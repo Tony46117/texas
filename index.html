@@ -834,7 +834,7 @@
     </footer>
 
     <!-- ─── Floating WhatsApp Button + Greeting Card ─── -->
-    <div class="wa-card" id="waCard" role="dialog" aria-label="WhatsApp chat invitation">
+    <div class="wa-card" id="waCard" role="dialog" aria-label="WhatsApp chat invitation" aria-hidden="true">
         <div class="wa-card-head">
             <span class="wa-card-avatar">🪵</span>
             <div>
@@ -963,19 +963,21 @@
         // ── WhatsApp greeting card ──
         const waCard = document.getElementById('waCard');
         const waCardClose = document.getElementById('waCardClose');
-        if (!sessionStorage.getItem('waCardDismissed')) {
-            setTimeout(() => waCard.classList.add('open'), 2500);
-            setTimeout(() => waCard.classList.remove('open'), 16000);
-        }
-        waCardClose.addEventListener('click', () => {
+        const waDismiss = () => {
             waCard.classList.remove('open');
+            waCard.setAttribute('aria-hidden', 'true');
             sessionStorage.setItem('waCardDismissed', '1');
-        });
+        };
+        if (!sessionStorage.getItem('waCardDismissed')) {
+            setTimeout(() => {
+                waCard.classList.add('open');
+                waCard.setAttribute('aria-hidden', 'false');
+            }, 2500);
+            setTimeout(waDismiss, 16000);
+        }
+        waCardClose.addEventListener('click', waDismiss);
         document.querySelectorAll('.wa-float, .wa-card-btn').forEach(el => {
-            el.addEventListener('click', () => {
-                waCard.classList.remove('open');
-                sessionStorage.setItem('waCardDismissed', '1');
-            });
+            el.addEventListener('click', waDismiss);
         });
 
         // ── Contact form → WhatsApp ──
